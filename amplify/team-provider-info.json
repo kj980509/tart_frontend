@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-tart-dev-04229-authRole",
+      "UnauthRoleArn": "arn:aws:iam::705584112951:role/amplify-tart-dev-04229-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::705584112951:role/amplify-tart-dev-04229-authRole",
+      "Region": "ap-northeast-2",
+      "DeploymentBucketName": "amplify-tart-dev-04229-deployment",
+      "UnauthRoleName": "amplify-tart-dev-04229-unauthRole",
+      "StackName": "amplify-tart-dev-04229",
+      "StackId": "arn:aws:cloudformation:ap-northeast-2:705584112951:stack/amplify-tart-dev-04229/7e3c1ed0-40aa-11ec-9647-0a3d6766b6f8",
+      "AmplifyAppId": "d219i4xywqtb2w"
+    },
+    "categories": {
+      "auth": {
+        "tartea59699e": {}
+      }
+    }
+  }
+}
