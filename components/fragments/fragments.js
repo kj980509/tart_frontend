@@ -1,34 +1,11 @@
 import {gql} from '@apollo/client';
 
-export const PHOTO_FRAGMENT = gql`
-  fragment PhotoFragment on Photo {
+export const BID_FRAGMENT = gql`
+  fragment BidFragment on Bid {
     id
-    file
-    likes
-    commentNumber
-    isLiked
-  }
-`;
-
-export const COMMENT_FRAGMENT = gql`
-  fragment CommentFragment on Comment {
-    id
-    user {
-      userName
-      avatar
-    }
-    payload
-    isMine
+    price
     createdAt
-  }
-`;
-
-export const USER_FRAGMENT = gql`
-  fragment UserFragment on User {
-    id
-    userName
-    gender
-    email
+    isSuccessed
   }
 `;
 
@@ -40,12 +17,10 @@ export const ART_PHOTOS_FRAGMENT = gql`
   }
 `;
 
-export const BID_FRAGMENT = gql`
-  fragment BidFragment on Bid {
-    id
-    price
-    createdAt
-    isSuccessed
+export const ART_QUESTION_FRAGMENT = gql`
+  fragment ArtQuestionFragment on ArtQuestion {
+    question
+    isAnswered
   }
 `;
 
@@ -59,12 +34,17 @@ export const ART_FRAGMENT = gql`
     WorkingEndYear
     WorkingEndMonth
     WorkingEndDay
+    explain
     categoryId
     isSuccessed
     totalLikes
     createdAt
     updatedAt
     error
+    questions {
+      question
+      userId
+    }
     photos {
       ...ArtPhotoFragment
     }

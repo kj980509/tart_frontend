@@ -1,5 +1,5 @@
 import React from 'react';
-import {ActivityIndicator, SafeAreaView, View} from 'react-native';
+import {ActivityIndicator, Text, View} from 'react-native';
 
 export default function ScreenLayout({loading, children}) {
   return (
@@ -10,8 +10,9 @@ export default function ScreenLayout({loading, children}) {
         width: '100%',
       }}>
       {loading ? (
-        <View style={{flex: 1, justifyContent: 'center'}}>
+        <View style={{flex: 1, justifyContent: 'center', marginTop: 50}}>
           <ActivityIndicator size={50} color="gray" />
+          <Text>Loading!</Text>
         </View>
       ) : (
         children

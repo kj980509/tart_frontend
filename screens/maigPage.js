@@ -24,8 +24,8 @@ export default function mainPage({navigation}) {
   console.log(data);
   return (
     <View>
-      <Button title="Sign Out" onPress={() => logUserOut()} />
       <Button title="Notice" onPress={() => navigation.navigate('Notice')} />
+      <Button title="Sign Out" onPress={() => logUserOut()} />
       {data ? (
         <Button title="New" onPress={() => navigation.navigate('Notice')} />
       ) : null}

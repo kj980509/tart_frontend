@@ -90,7 +90,6 @@ const AuctionTitle = styled.Text`
 `;
 
 export default function Home({navigation}) {
-  const seeTotalArt_data = [{data: [{Art: data?.seeTotalArt}]}];
   const [categoryId, setCategoryId] = useState(0);
   useEffect(() => {
     refetch();
@@ -111,29 +110,30 @@ export default function Home({navigation}) {
   const CategoryBar = () => {
     return (
       <CategoryContainer>
-        <CategoryButton onPress={() => setCategoryId(1)}>
+        <CategoryButton onPress={() => setCategoryId(0)}>
           <CategoryName>전체</CategoryName>
+          {categoryId === 0 ? <UnderLine /> : null}
+        </CategoryButton>
+        <CategoryButton onPress={() => setCategoryId(1)}>
+          <CategoryName>미술</CategoryName>
           {categoryId === 1 ? <UnderLine /> : null}
         </CategoryButton>
         <CategoryButton onPress={() => setCategoryId(2)}>
-          <CategoryName>미술</CategoryName>
+          <CategoryName>의류</CategoryName>
           {categoryId === 2 ? <UnderLine /> : null}
         </CategoryButton>
         <CategoryButton onPress={() => setCategoryId(3)}>
-          <CategoryName>의류</CategoryName>
+          <CategoryName>공예품</CategoryName>
           {categoryId === 3 ? <UnderLine /> : null}
         </CategoryButton>
         <CategoryButton onPress={() => setCategoryId(4)}>
-          <CategoryName>공예품</CategoryName>
-          {categoryId === 4 ? <UnderLine /> : null}
-        </CategoryButton>
-        <CategoryButton onPress={() => setCategoryId(5)}>
           <CategoryName>기타</CategoryName>
-          {categoryId === 5 ? <UnderLine /> : null}
+          {categoryId === 4 ? <UnderLine /> : null}
         </CategoryButton>
       </CategoryContainer>
     );
   };
+  const seeTotalArt_data = [{data: [{Art: data?.seeTotalArt}]}];
   return (
     <ScreenLayout loading={loading}>
       <TotalHeaderContainer>
@@ -164,7 +164,7 @@ export default function Home({navigation}) {
           showsVerticalScrollIndicator={false}
           onRefresh={refresh}
           renderSectionHeader={() => <CategoryBar />}
-          onEndReachedThreshold={0.2}
+          onEndReachedThreshold={0.5}
           onEndReached={() =>
             fetchMore({
               variables: {

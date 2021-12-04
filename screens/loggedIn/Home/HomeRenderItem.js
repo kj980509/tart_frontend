@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {FlatList, TouchableOpacity} from 'react-native';
+import {FlatList, TouchableOpacity, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import ScreenLayout from '../../../components/ScreenLayOut';
 import {pxRatio} from '../../../utils/utils';
@@ -55,11 +55,11 @@ const PresentBid = styled(AuctionPriceText)`
 /*
  Rendering Item In Home.js on SectionList
  */
-function HomeRenderItem(props) {
+export default function HomeRenderItem(props) {
   const navigation = useNavigation();
   const ArtItem = ({item: art}) => {
     const goToDetail = () =>
-      navigation.navigate('Home', {
+      navigation.navigate('ArtDetail', {
         artId: art?.id,
       });
     return (
@@ -96,5 +96,3 @@ function HomeRenderItem(props) {
     </ScreenLayout>
   );
 }
-
-export default HomeRenderItem;

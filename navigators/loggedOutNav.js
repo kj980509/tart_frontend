@@ -1,7 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import Login from '../screens/Login';
-import SignUp from '../screens/signUp';
+import Login from '../screens/loggedOut/Login';
+import SignUp from '../screens/loggedOut/signUp';
+import SetPassword from '../screens/loggedOut/SetPassword';
 const Stack = createStackNavigator();
 
 export default function LoggedOutNav() {
@@ -22,6 +23,11 @@ export default function LoggedOutNav() {
       <Stack.Screen
         name={'SignUp'}
         component={SignUp}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={'SetPassword'}
+        component={SetPassword}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

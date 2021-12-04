@@ -1,10 +1,11 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import Login from '../screens/Login';
+import Login from '../screens/loggedOut/Login';
 const Stack = createStackNavigator();
 import mainPage from '../screens/maigPage';
 import Notice from '../screens/loggedIn/Notice';
 import Home from '../screens/loggedIn/Home/Home';
+import ArtDetail from '../screens/loggedIn/Auction/ArtDetail';
 
 export default function LoginNav() {
   return (
@@ -29,6 +30,11 @@ export default function LoginNav() {
       <Stack.Screen
         name={'Notice'}
         component={Notice}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={'ArtDetail'}
+        component={ArtDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
