@@ -4,11 +4,8 @@ import {FlatList, TouchableOpacity, Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import ScreenLayout from '../../../components/ScreenLayOut';
 import {pxRatio} from '../../../utils/utils';
-
-// Style: Total Screen Container
-const Container = styled.View`
-  flex: 1;
-  margin-left: ${pxRatio(11.3, 'row')}px;
+const PhotoContainer = styled.View`
+  margin-top: ${pxRatio(25, 'column')}px;
 `;
 
 const Photo = styled.Image`
@@ -19,6 +16,12 @@ const Photo = styled.Image`
   border-radius: 13px;
   background-color: gray;
 `;
+
+const InfoContainer = styled.View`
+  margin-top: ${pxRatio(4, 'column')}px;
+  flex-direction: row;
+`;
+
 // Style: Art Info Container
 const ArtInformation = styled.View`
   flex: 1;
@@ -64,13 +67,15 @@ export default function HomeRenderItem(props) {
       });
     return (
       <ScreenLayout>
-        <Container>
+        <PhotoContainer>
           <TouchableOpacity onPress={goToDetail}>
             <Photo
               style={{resizeMode: 'cover', width: 190, height: 180}}
               source={{uri: art?.photos[0]?.imageUrl}}
             />
           </TouchableOpacity>
+        </PhotoContainer>
+        <InfoContainer>
           <ArtInformation>
             <Title>{art?.title}</Title>
             <UserName>{art?.user?.userName}</UserName>
@@ -80,7 +85,7 @@ export default function HomeRenderItem(props) {
             <AuctionPriceText>경매가</AuctionPriceText>
             <PresentBid> {art?.presentPrice}</PresentBid>
           </AuctionInformation>
-        </Container>
+        </InfoContainer>
       </ScreenLayout>
     );
   };

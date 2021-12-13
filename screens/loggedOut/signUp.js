@@ -165,9 +165,10 @@ export default function SignUp({navigation}) {
               onChangeText={text =>
                 setValue('userName', text) & setUserName(text)
               }
-              returnKeyType="done"
             />
-            {userNameValid === false ? <Text>이미 등록된 유저명입니다</Text> : null}
+            {userNameValid === false ? (
+              <Text>이미 등록된 유저명입니다</Text>
+            ) : null}
           </InfoContainer>
           <InfoContainer>
             <InfoTitle>태어난 년도</InfoTitle>

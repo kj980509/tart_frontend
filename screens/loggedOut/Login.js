@@ -13,11 +13,12 @@ import styled from 'styled-components/native';
 import {css} from 'styled-components/native';
 import {pxRatio} from '../../utils/utils';
 import SignUp from './signUp';
+import {gql, useQuery} from '@apollo/client';
+import {logUserIn} from '../../apollo';
 
 const KakaoLogo = require('../../asset/kakaoLogo.png');
 const FacebookLogo = require('../../asset/facebookLogo.png');
 const GoogleLogo = require('../../asset/googleLogo.png');
-
 Amplify.configure({
   ...awsconfig,
   oauth: {
@@ -25,6 +26,15 @@ Amplify.configure({
     urlOpener,
   },
 });
+
+const IsSignedUpQuery = gql`
+  query isSignedUp($email: String!) {
+    isSignedUp(email: $email) {
+      ok
+      token
+    }
+  }
+`;
 
 const TotalContainer = styled.View`
   align-items: center;
@@ -89,7 +99,15 @@ const LoginText = styled.Text`
 
 function Login({navigation}) {
   const [user, setUser] = useState(null);
-  const [mail, setMail] = useState(null);
+  const [mail, setMail] = useState();
+  const {data, loading} = useQuery(IsSignedUpQuery, {
+    variables: {
+      email: mail,
+    },
+  });
+  if (!loading & (data?.isSignedUp?.ok === true)) {
+    logUserIn(data.isSignedUp.token);
+  }
   useEffect(() => {
     Hub.listen('auth', ({payload: {event, data}}) => {
       switch (event) {
@@ -122,6 +140,7 @@ function Login({navigation}) {
     const profile = await getProfile();
     const kakaoEmail = profile.email;
     if (token) {
+      setMail(kakaoEmail);
       navigation.setParams({email: kakaoEmail});
       return {authState: 'verifyContact', attributes: profile};
     }

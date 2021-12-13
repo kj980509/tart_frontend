@@ -3,9 +3,11 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Login from '../screens/loggedOut/Login';
 const Stack = createStackNavigator();
 import mainPage from '../screens/maigPage';
-import Notice from '../screens/loggedIn/Notice';
+import Notice from '../screens/loggedIn/Notice/Notice';
 import Home from '../screens/loggedIn/Home/Home';
 import ArtDetail from '../screens/loggedIn/Auction/ArtDetail';
+import CreateArt from '../screens/loggedIn/createArt/CreateArt';
+import SelectCategory from '../screens/loggedIn/createArt/SelectCategory';
 
 export default function LoginNav() {
   return (
@@ -35,6 +37,16 @@ export default function LoginNav() {
       <Stack.Screen
         name={'ArtDetail'}
         component={ArtDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={'CreateArt'}
+        component={CreateArt}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={'SelectCategory'}
+        component={SelectCategory}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

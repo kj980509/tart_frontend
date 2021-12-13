@@ -70,5 +70,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>TART would like access to your photo gallery</string>
+  <key>NSCameraUsageDescription</key>
+  <string>TART would like to use your camera</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>TART would like to save photos to your photo gallery</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>TART would like to use your microphone (for videos)</string>
 </dict>
 </plist>

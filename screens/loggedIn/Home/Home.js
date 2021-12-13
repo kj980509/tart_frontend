@@ -3,12 +3,10 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
   SectionList,
-  FlatList,
 } from 'react-native';
 import styled from 'styled-components/native';
-import {gql, useQuery} from '@apollo/client';
+import {gql, useQuery, useSubscription} from '@apollo/client';
 import Banner from './Banner';
 import {pxRatio} from '../../../utils/utils';
 import {ART_FRAGMENT} from '../../../components/fragments/fragments';
@@ -32,14 +30,22 @@ const SEE_TOTAL_ART_QUERY = gql`
   }
   ${ART_FRAGMENT}
 `;
-// Style: Total Header Container
+const BID_ALARM = gql`
+  subscription bidAlarm {
+    bidAlarm {
+      user {
+        userName
+      }
+    }
+  }
+`;
+
 const TotalHeaderContainer = styled.View`
   flex-direction: row;
   margin-top: ${pxRatio(65, 'column')}px;
   align-items: center;
   margin-bottom: ${pxRatio(19, 'column')}px;
 `;
-// Style: Left Header Container
 const LeftHeaderContainer = styled.View`
   flex-direction: row;
   justify-content: center;
@@ -48,7 +54,6 @@ const LeftHeaderContainer = styled.View`
   width: ${pxRatio(84.11, 'row')}px;
   height: ${pxRatio(28.4, 'column')}px;
 `;
-// Style: Right Header
 const RightHeaderContainer = styled.View`
   flex-direction: row;
   flex: 1;
@@ -60,7 +65,6 @@ const SearchButton = styled.TouchableOpacity`
   flex: 1;
 `;
 const NoticeButton = styled.TouchableOpacity``;
-// Style: Category Bar
 const CategoryContainer = styled.View`
   flex-direction: row;
   justify-content: center;
@@ -68,6 +72,8 @@ const CategoryContainer = styled.View`
   margin-top: ${pxRatio(24, 'row')}px;
   margin-left: ${pxRatio(18, 'row')}px;
   margin-right: ${pxRatio(18, 'row')}px;
+  border-bottom-width: ${pxRatio(4, 'column')}px;
+  border-bottom-color: rgba(229, 229, 229, 1);
 `;
 
 const CategoryButton = styled.TouchableOpacity`
@@ -90,10 +96,18 @@ const AuctionTitle = styled.Text`
 `;
 
 export default function Home({navigation}) {
-  const [categoryId, setCategoryId] = useState(0);
+  const [newNotice, setNewNotice] = useState(false);
+  const bid_alarm = useSubscription(BID_ALARM);
   useEffect(() => {
     refetch();
   }, [refetch, categoryId]);
+  let subs = null;
+  useEffect(() => {
+    if (!bid_alarm?.loading) {
+      setNewNotice(bid_alarm?.data);
+    }
+  }, [bid_alarm.loading, bid_alarm.data]);
+  const [categoryId, setCategoryId] = useState(0);
   const {data, loading, refetch, fetchMore} = useQuery(SEE_TOTAL_ART_QUERY, {
     variables: {
       take: 4,
@@ -141,11 +155,15 @@ export default function Home({navigation}) {
           <Logo />
         </LeftHeaderContainer>
         <RightHeaderContainer>
-          <SearchButton onPress={() => navigation.navigate('Notice')}>
+          <SearchButton
+            onPress={() => navigation.navigate('CreateArt')}
+            onRefresh={refresh}>
             <Image source={SearchIcon} />
           </SearchButton>
-          <NoticeButton onPress={() => navigation.navigate('Notice')}>
+          <NoticeButton
+            onPress={() => navigation.navigate('Notice') & setNewNotice(null)}>
             <Image source={NoticeIcon} />
+            {newNotice ? <UnderLine /> : null}
           </NoticeButton>
         </RightHeaderContainer>
       </TotalHeaderContainer>
