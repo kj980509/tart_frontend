@@ -122,6 +122,7 @@ export default function SignUp({navigation}) {
   const [female, setFemale] = useState(null);
   const [userNameValid, setUserNameValid] = useState(null);
   const {register, getValues, setValue} = useForm();
+  console.log(navigation.getState().routes);
   const email = navigation.getState().routes[0].params.email;
   setValue('email', email);
   useEffect(() => {
@@ -151,6 +152,7 @@ export default function SignUp({navigation}) {
     navigation.setParams(getValues());
     navigation.navigate('SetPassword');
   }
+  console.log(getValues());
   return (
     <ScreenLayout>
       <AuthLayout>

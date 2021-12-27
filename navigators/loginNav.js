@@ -1,53 +1,19 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import Login from '../screens/loggedOut/Login';
-const Stack = createStackNavigator();
-import mainPage from '../screens/maigPage';
-import Notice from '../screens/loggedIn/Notice/Notice';
-import Home from '../screens/loggedIn/Home/Home';
-import ArtDetail from '../screens/loggedIn/Auction/ArtDetail';
-import CreateArt from '../screens/loggedIn/createArt/CreateArt';
-import SelectCategory from '../screens/loggedIn/createArt/SelectCategory';
+import Tabs from './Tabs/Tabs';
 
-export default function LoginNav() {
+const Stack = createStackNavigator();
+
+//로그인을 했을때만(token이 있을시에만) 올수있는 나비게이터
+export default function LoggedInNav() {
   return (
-    <Stack.Navigator
-      screeOptions={{
-        headerBackTitleVisible: false,
-        headerTitle: false,
-        headerShown: false,
-        headerTransparent: true,
-        headerTintColor: 'white',
-      }}>
+    <Stack.Navigator>
       <Stack.Screen
-        name={'mainPage'}
-        component={mainPage}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={'Home'}
-        component={Home}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={'Notice'}
-        component={Notice}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={'ArtDetail'}
-        component={ArtDetail}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={'CreateArt'}
-        component={CreateArt}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name={'SelectCategory'}
-        component={SelectCategory}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+        }}
+        name="Tabs"
+        component={Tabs}
       />
     </Stack.Navigator>
   );

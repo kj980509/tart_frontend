@@ -113,9 +113,10 @@ function Login({navigation}) {
       switch (event) {
         case 'signIn':
         case 'cognitoHostedUI':
-          getUser().then(userData => setMail(userData.attributes.email));
+          getUser().then(userData =>
+            navigation.setParams({email: userData.attributes.email}),
+          );
           getUser().then(userData => setUser(userData));
-          navigation.setParams({email: mail});
           break;
         case 'signOut':
           console.log('Sign Out');
@@ -129,7 +130,6 @@ function Login({navigation}) {
     });
     getUser().then(userData => setUser(userData));
   }, [mail, navigation]);
-
   function getUser() {
     return Auth.currentAuthenticatedUser()
       .then(userData => userData)

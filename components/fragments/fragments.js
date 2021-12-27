@@ -1,4 +1,12 @@
 import {gql} from '@apollo/client';
+export const USER_FRAGMENT = gql`
+  fragment UserFragment on User{
+    id
+    userName
+    gender
+    email
+  }
+`;
 
 export const BID_FRAGMENT = gql`
   fragment BidFragment on Bid {
@@ -50,4 +58,50 @@ export const ART_FRAGMENT = gql`
     }
   }
   ${ART_PHOTOS_FRAGMENT}
+`;
+export const COMMENT_FRAGMENT = gql`
+  fragment CommentFragment on PostComment{
+    id
+    user{
+      ...UserFragment
+    }
+    userId
+    comment
+    rootCommentId
+    postId
+    isMine
+    post{
+      id
+    }
+  }
+  ${USER_FRAGMENT}
+`;
+
+export const POST_FRAGMENT = gql`
+  fragment PostFragment on Post{
+    id
+    title
+    post
+    imageUrl
+    category{
+      id
+      category
+    }
+    categoryId
+    isHot
+    totalLikes
+    updatedAt
+    createdAt
+    user{
+      ...UserFragment
+    }
+    userId
+    comments{
+      ...CommentFragment
+    }
+    error
+    isMine
+  }
+  ${COMMENT_FRAGMENT}
+  ${USER_FRAGMENT}
 `;

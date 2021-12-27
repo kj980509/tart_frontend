@@ -2,14 +2,12 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components/native';
 import {Header} from '../../../components/utils';
 import {useQuery, gql} from '@apollo/client';
-import {View, Text} from 'react-native';
 import ScreenLayout from '../../../components/ScreenLayOut';
-import {ScrollView} from 'react-native-gesture-handler';
 import {pxRatio} from '../../../utils/utils';
 const SEE_CATEGORIES_QUERY = gql`
-  query {
-    seeCategories {
-      name
+  query seeArtCategories {
+    seeArtCategories {
+      category
       id
     }
   }
@@ -30,8 +28,7 @@ const Category = styled.Text`
 
 export default function SelectCategory({navigation}) {
   const {data, loading} = useQuery(SEE_CATEGORIES_QUERY);
-  const [selectedCategory, setSelectedCategory] = useState();
-  const categories = data?.seeCategories?.map(Category => Category.name);
+  const categories = data?.seeArtCategories?.map(Category => Category.category);
   return (
     <ScreenLayout loading={loading}>
       <Header text={'카테고리'} navigation={navigation} />
@@ -40,7 +37,6 @@ export default function SelectCategory({navigation}) {
             <CategoryContainer
               key={category}
               onPress={() =>
-                setSelectedCategory(category) &
                 navigation.navigate('CreateArt', {
                   category: category,
                 })

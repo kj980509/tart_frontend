@@ -10,6 +10,7 @@ import {useMutation, gql} from '@apollo/client';
 import {useForm} from 'react-hook-form';
 import {logUserIn} from '../../../apollo';
 import {ReactNativeFile} from 'apollo-upload-client';
+import {ScrollView} from 'react-native-gesture-handler';
 const CREATE_ART_MUTATION = gql`
   mutation (
     $title: String!
@@ -52,6 +53,17 @@ const UploadImageNumber = styled.Text`
   font-size: 14px;
   color: rgba(196, 196, 196, 1);
 `;
+const UploadedImage = styled.Image`
+  width: ${pxRatio(90, 'row')}px;
+  height: ${pxRatio(90, 'column')}px;
+  margin-left: ${pxRatio(19, 'row')}px;
+  border-radius: 17px;
+`;
+const UploadedImageScrollView = styled.ScrollView`
+  height: 90px;
+  margin-left: ${pxRatio(18, 'row')}px;
+  margin-top: ${pxRatio(31, 'column')}px;
+`;
 const InfoInput = styled.TextInput`
   margin-top: ${pxRatio(44, 'column')}px;
   margin-left: ${pxRatio(18, 'row')}px;
@@ -79,13 +91,9 @@ const SelectCategoryText = styled.Text`
 const SelectCategoryImage = styled.Image`
   margin-left: ${pxRatio(283, 'row')};
 `;
-const Photo = styled.Image`
-  width: ${pxRatio(200, 'row')}px;
-  height: ${pxRatio(200, 'column')}px;
-`;
 const CompleteButton = styled.TouchableOpacity`
   background-color: rgba(255, 199, 0, 0.71);
-  margin-top: ${pxRatio(315, 'column')}px;
+  margin-top: ${pxRatio(100, 'column')}px;
   width: 100%;
   height: ${pxRatio(90, 'column')}px;
   align-items: center;
@@ -149,6 +157,7 @@ export default function CreateArt({navigation}) {
       includeBase64: true,
     })
       .then(image => {
+        setUploadedImage(image.map(img => img.sourceURL));
         setValue(
           'images',
           image.map(
@@ -165,6 +174,7 @@ export default function CreateArt({navigation}) {
         console.log(e);
       });
   };
+  console.log(uploadedImages);
   function onValid() {
     if (!loading) {
       createArt({
@@ -179,10 +189,21 @@ export default function CreateArt({navigation}) {
   return (
     <ScreenLayout>
       <Header text="작품 등록" navigation={navigation} />
-      <ImageUploadContainer onPress={() => imagePick()}>
-        <UploadImage source={uploadImageIcon} />
-        <UploadImageNumber>0/10</UploadImageNumber>
-      </ImageUploadContainer>
+      {uploadedImages ? (
+        <UploadedImageScrollView
+          style={{flexGrow: 0}}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}>
+          {uploadedImages.map(img => (
+            <UploadedImage source={{uri: img}} />
+          ))}
+        </UploadedImageScrollView>
+      ) : (
+        <ImageUploadContainer onPress={() => imagePick()}>
+          <UploadImage source={uploadImageIcon} />
+          <UploadImageNumber>0/5</UploadImageNumber>
+        </ImageUploadContainer>
+      )}
       <InfoInput
         placeholder={'작품명'}
         onChangeText={text => setValue('title', text)}

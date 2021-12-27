@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {FlatList, TouchableOpacity, Text} from 'react-native';
+import {pxRatio} from '../../utils/utils';
+import ScreenLayout from '../ScreenLayOut';
 import {useNavigation} from '@react-navigation/native';
-import ScreenLayout from '../../../components/ScreenLayOut';
-import {pxRatio} from '../../../utils/utils';
+
 const PhotoContainer = styled.TouchableOpacity`
   margin-top: ${pxRatio(25, 'column')}px;
   width: ${pxRatio(180, 'row')}px;
@@ -65,53 +65,3 @@ const UserName = styled.Text`
   margin-top: ${pxRatio(4, 'column')}px;
   font-weight: 500;
 `;
-// Style: Auction Info
-const AuctionTime = styled.Text`
-  margin-left: ${pxRatio(17, 'row')}px;
-  font-weight: 600;
-`;
-
-/*
- Rendering Item In Home.js on SectionList
- */
-export default function HomeRenderItem(props) {
-  const navigation = useNavigation();
-  const ArtItem = ({item: art}) => {
-    const goToDetail = () =>
-      navigation.navigate('ArtDetail', {
-        artId: art?.id,
-      });
-    return (
-      <ScreenLayout>
-        <PhotoContainer onPress={goToDetail}>
-          <Photo source={{uri: art?.photos[0]?.imageUrl}} />
-        </PhotoContainer>
-        <InfoContainer>
-          <AuctionInformation>
-            <AuctionPriceTextContainer>
-              <AuctionPriceText>경매가</AuctionPriceText>
-            </AuctionPriceTextContainer>
-            <PresentBid> {art?.presentPrice}</PresentBid>
-          </AuctionInformation>
-          <ArtInformation>
-            <Title>{art?.title}</Title>
-            <UserName>
-              {art?.user?.userName.length < 4 ? art?.user?.userName : '이승혁'}
-            </UserName>
-          </ArtInformation>
-        </InfoContainer>
-      </ScreenLayout>
-    );
-  };
-
-  return (
-    <ScreenLayout>
-      <FlatList
-        data={props?.Art}
-        renderItem={ArtItem}
-        keyExtractor={item => '' + item.id}
-        numColumns={2}
-      />
-    </ScreenLayout>
-  );
-}

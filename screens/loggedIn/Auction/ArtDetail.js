@@ -12,7 +12,7 @@ import ScreenLayout from '../../../components/ScreenLayOut';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import OtherArts from '../../../components/art/OhterArts';
 import ArtQuestions from '../../../components/art/ArtQuestions';
-
+import Icon from 'react-native-vector-icons/Ionicons';
 const like = require('../../../asset/like.png');
 const SEE_ART_QUERY = gql`
   query seeArt($artId: Int!) {
@@ -39,19 +39,23 @@ const Photos = styled.ScrollView`
   margin-top: ${pxRatio(60, 'column')}px;
 `;
 const UserInfoContainer = styled.View`
-  height: ${pxRatio(50, 'column')}px;
+  flex-direction: row-reverse;
+  align-items: center;
+  height: ${pxRatio(35, 'column')}px;
   margin-left: ${pxRatio(18, 'column')}px;
-  margin-right: ${pxRatio(18, 'column')}px;
-  margin-top: ${pxRatio(10, 'column')}px;
-  background-color: gold;
+  margin-right: ${pxRatio(190, 'column')}px;
+  margin-top: ${pxRatio(12, 'column')}px;
 `;
-const LikeView = styled.View`
-  background-color: blue;
+const LikeContainer = styled.TouchableOpacity`
+  margin-left: ${pxRatio(5, 'row')}px;
   width: ${pxRatio(40, 'row')};
+`;
+const ArtistName = styled.Text`
+  font-weight: 500;
+  font-size: 22px;
 `;
 
 const InfoCategoryContainer = styled.View`
-  background-color: wheat;
   height: ${pxRatio(40, 'column')}px;
 `;
 const InfoCategoryBar = styled.View`
@@ -61,6 +65,8 @@ const InfoCategoryBar = styled.View`
 `;
 const ArtExplanation = styled.TouchableOpacity`
   flex: 1;
+  justify-content: center;
+  align-items: center;
   border-top-right-radius: 10px;
   border-top-width: ${pxRatio(1, 'row')}px;
   border-right-width: ${pxRatio(1, 'row')}px;
@@ -76,13 +82,14 @@ const ArtExplanation = styled.TouchableOpacity`
 `;
 const QnA = styled.TouchableOpacity`
   flex: 1;
+  justify-content: center;
+  align-items: center;
   border-top-width: ${pxRatio(1, 'row')}px;
   border-left-width: ${pxRatio(1, 'row')}px;
   border-right-width: ${pxRatio(1, 'row')}px;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   ${props => {
-    console.log(props.theme);
     if (props.theme !== true) {
       return css`
         border-bottom-width: ${pxRatio(1, 'row')};
@@ -90,9 +97,16 @@ const QnA = styled.TouchableOpacity`
     }
   }};
 `;
+const CategoryLine = styled.View`
+  margin-left: ${pxRatio(184, 'row')}px;
+  border-bottom-width: ${pxRatio(1, 'row')};
+`;
+const CategoryText = styled.Text`
+  font-weight: 400;
+  font-size: 16px;
+`;
 
 const ArtInfoContainer = styled.View`
-  background-color: aquamarine;
   margin-top: 10px;
   height: ${pxRatio(120, 'column')}px;
   margin-left: ${pxRatio(18, 'row')}px;
@@ -109,6 +123,7 @@ export default function ArtDetail(props) {
 
   const [isQnA, setIsQnA] = useState(false);
   const [isArtInfo, setIsArtInfo] = useState(true);
+  const [isLike, setIsLike] = useState();
   const [refreshing, setRefreshing] = useState();
   const onRefresh = async () => {
     setRefreshing(true);
@@ -132,11 +147,10 @@ export default function ArtDetail(props) {
         </Photos>
       </View>
       <UserInfoContainer>
-        <LikeView>
-          <TouchableOpacity>
-            <Image source={like} />
-          </TouchableOpacity>
-        </LikeView>
+        <LikeContainer>
+          <Icon name="heart-outline" size={30} />
+        </LikeContainer>
+        <ArtistName>{data?.seeArt?.user?.userName}</ArtistName>
       </UserInfoContainer>
       <InfoCategoryContainer>
         <InfoCategoryBar>
@@ -145,16 +159,19 @@ export default function ArtDetail(props) {
               setIsArtInfo(true);
               setIsQnA(false);
             }}
-            theme={isArtInfo}
-          />
+            theme={isArtInfo}>
+            <CategoryText>작품설명</CategoryText>
+          </ArtExplanation>
           <QnA
             onPress={() => {
               setIsQnA(true);
               setIsArtInfo(false);
             }}
-            theme={isQnA}
-          />
+            theme={isQnA}>
+            <CategoryText>QnA</CategoryText>
+          </QnA>
         </InfoCategoryBar>
+        <CategoryLine />
       </InfoCategoryContainer>
       <ArtInfoContainer>
         {isArtInfo ? (

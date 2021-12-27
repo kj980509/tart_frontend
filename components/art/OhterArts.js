@@ -17,9 +17,10 @@ const OTHER_ART = gql`
 `;
 
 const OtherArtContainer = styled.View`
+  width: ${pxRatio(100, 'row')}px;
+  height: ${pxRatio(100, 'column')}px;
   margin-left: ${pxRatio(18, 'row')}px;
-  margin-top: ${pxRatio(10, 'column')}px;
-  background-color: black;
+  margin-bottom: ${pxRatio(50, 'column')}px;
   align-items: center;
   flex-direction: row;
 `;
