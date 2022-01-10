@@ -1,9 +1,21 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {FlatList, TouchableOpacity, Text} from 'react-native';
+import {FlatList, TouchableOpacity, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import ScreenLayout from '../../../components/ScreenLayOut';
 import {pxRatio} from '../../../utils/utils';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useState} from 'react';
+import {Modal} from  'react-native';
+
+const OrderChangeContainer = styled.TouchableOpacity`
+  flex-direction: row;
+  margin-left: ${pxRatio(333, 'row')}px;
+`;
+const OrderChangeText = styled.Text``;
+
+const OrderChangeImage = styled.Image``;
+
 const PhotoContainer = styled.TouchableOpacity`
   margin-top: ${pxRatio(25, 'column')}px;
   width: ${pxRatio(180, 'row')}px;
@@ -103,9 +115,20 @@ export default function HomeRenderItem(props) {
       </ScreenLayout>
     );
   };
-
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <ScreenLayout>
+      <Modal>
+        <View>
+          <Text>asdsa</Text>
+        </View>
+      </Modal>
+      <OrderChangeContainer onPress={() => setModalVisible(true)}>
+        <OrderChangeText>asdkjas</OrderChangeText>
+        <OrderChangeImage>
+          <Ionicons name={'ios-repeat-outline'} size={15} />
+        </OrderChangeImage>
+      </OrderChangeContainer>
       <FlatList
         data={props?.Art}
         renderItem={ArtItem}

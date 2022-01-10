@@ -8,6 +8,7 @@ import CreateArt from '../../screens/loggedIn/createArt/CreateArt';
 import SelectCategory from '../../screens/loggedIn/createArt/SelectCategory';
 import ArtSearch from '../../screens/loggedIn/Home/ArtSearch';
 import CreatePost from '../../screens/loggedIn/Post/CreatePost';
+import PostDetail from '../../screens/loggedIn/Post/PostDetail';
 const Stack = createStackNavigator();
 
 export default function TabsStack({screenName}) {
@@ -57,6 +58,11 @@ export default function TabsStack({screenName}) {
       <Stack.Screen
         name={'CreatePost'}
         component={CreatePost}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={'PostDetail'}
+        component={PostDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

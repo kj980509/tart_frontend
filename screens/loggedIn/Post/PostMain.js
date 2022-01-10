@@ -106,7 +106,10 @@ export default function PostMain({navigation}) {
         <TotalPostContainer>
           {posts
             ? posts.map(post => (
-                <PostContainer>
+                <PostContainer
+                  onPress={() =>
+                    navigation.navigate('PostDetail', {id: post?.id})
+                  }>
                   <PostTitle>{post?.title}</PostTitle>
                   <PostContent>{post?.post}</PostContent>
                   <PostCreatedTime>
@@ -136,7 +139,7 @@ export default function PostMain({navigation}) {
         navigationState={{index, routes}}
         renderScene={SceneMap(routeDict)}
         initialLayout={{height: 300}}
-        style={{backgroundColor: 'grey', height: 300}}
+        style={{height: 300}}
         renderTabBar={props => (
           <TabBar
             {...props}
